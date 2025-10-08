@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Cronograma - Desarrolladores</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>
+                <span>📅</span>
+                Sistema de Cronograma - Desarrolladores
+            </h1>
+            <div class="header-actions">
+                <button class="btn btn-primary" onclick="openModal('developer')">
+                    <span>➕</span> Agregar Desarrollador
+                </button>
+                <button class="btn btn-success" onclick="openNewAssignmentModal()">
+                    <span>📋</span> Nueva Asignación
+                </button>
+                <button class="btn btn-success" onclick="exportData()">
+                    <span>💾</span> Exportar Datos
+                </button>
+            </div>
+        </div>
+
+        <div class="controls">
+            <div class="filter-group">
+                <label>Filtrar por Proyecto</label>
+                <select id="filterProject" onchange="filterTimeline()">
+                    <option value="">Todos los proyectos</option>
+                    <option value="ONIX">ONIX</option>
+                    <option value="Poliedro">Poliedro</option>
+                    <option value="DIME">DIME</option>
+                    <option value="FACT">FACT</option>
+                    <option value="Banco Agrario">Banco Agrario</option>
+                    <option value="CSI">CSI</option>
+                    <option value="EPM">EPM</option>
+                    <option value="ANDIE">ANDIE</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label>Buscar Desarrollador</label>
+                <input type="text" id="searchDev" placeholder="Nombre del desarrollador..." oninput="filterTimeline()">
+            </div>
+
+            <div class="filter-group">
+                <label>Mes</label>
+                <div class="month-navigation">
+                    <button class="btn-nav" onclick="previousMonth()" title="Mes anterior">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                            <path d="M11 2L5 8l6 6V2z"/>
+                        </svg>
+                    </button>
+                    <input type="month" id="filterMonth" onchange="changeMonth()" value="" min="2024-01" max="2026-12">
+                    <button class="btn-nav" onclick="nextMonth()" title="Mes siguiente">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                            <path d="M5 2v12l6-6-6-6z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <h3>Total Desarrolladores</h3>
+                <p id="statDevs">0</p>
+            </div>
+            <div class="stat-card" style="background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);">
+                <h3>Proyectos Activos</h3>
+                <p id="statProjects">0</p>
+            </div>
+            <div class="stat-card" style="background: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%);">
+                <h3>HUTs en Curso</h3>
+                <p id="statHuts">0</p>
+            </div>
+        </div>
+
+        <div class="timeline-container">
+            <div class="timeline" id="timeline"></div>
+        </div>
+
+        <div class="legend">
+            <h3>Leyenda de Proyectos</h3>
+            <div class="legend-items">
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #9f7aea;"></div>
+                    <span>ONIX</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #f6ad55;"></div>
+                    <span>Poliedro</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #fc8181;"></div>
+                    <span>DIME</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #4fd1c5;"></div>
+                    <span>FACT</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #48bb78;"></div>
+                    <span>Banco Agrario</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #38b2ac;"></div>
+                    <span>CSI</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #ed8936;"></div>
+                    <span>EPM</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #4299e1;"></div>
+                    <span>ANDIE</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #fbd38d;"></div>
+                    <span>Vacaciones</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #fbd38d; border: 2px solid #f6ad55;"></div>
+                    <span>Festivos</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para agregar desarrollador -->
+    <div id="modalDeveloper" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Agregar Desarrollador</h2>
+                <button class="close-btn" onclick="closeModal('developer')">&times;</button>
+            </div>
+            <form onsubmit="saveDeveloper(event)">
+                <div class="form-group">
+                    <label>Nombre Completo *</label>
+                    <input type="text" id="devName" required placeholder="Ej: Juan Pérez">
+                </div>
+                <div class="form-group">
+                    <label>Área/Especialidad</label>
+                    <input type="text" id="devArea" placeholder="Ej: Backend, Frontend, Full Stack">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('developer')">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal para agregar/editar tarea -->
+    <div id="modalTask" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="taskModalTitle">Agregar Tarea</h2>
+                <button class="close-btn" onclick="closeModal('task')">&times;</button>
+            </div>
+            <form onsubmit="saveTask(event)">
+                <input type="hidden" id="taskId">
+                
+                <div class="form-group" id="devSelectGroup">
+                    <label>Desarrollador *</label>
+                    <select id="taskDevId" required>
+                        <option value="">Seleccione un desarrollador</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Proyecto *</label>
+                    <select id="taskProject" required>
+                        <option value="">Seleccione un proyecto</option>
+                        <option value="ONIX">ONIX</option>
+                        <option value="Poliedro">Poliedro</option>
+                        <option value="DIME">DIME</option>
+                        <option value="FACT">FACT</option>
+                        <option value="Banco Agrario">Banco Agrario</option>
+                        <option value="CSI">CSI</option>
+                        <option value="EPM">EPM</option>
+                        <option value="ANDIE">ANDIE</option>
+                        <option value="Vacaciones">Vacaciones</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Número HUT *</label>
+                    <input type="text" id="taskHut" required placeholder="Ej: HUT 649547">
+                </div>
+
+                <div class="form-group">
+                    <label>Fecha Inicio *</label>
+                    <input type="date" id="taskDateStart" required min="2024-01-01" max="2026-12-31">
+                </div>
+
+                <div class="form-group">
+                    <label>Fecha Fin *</label>
+                    <input type="date" id="taskDateEnd" required min="2024-01-01" max="2026-12-31">
+                </div>
+
+                <div class="form-group">
+                    <label>Descripción</label>
+                    <textarea id="taskDescription" placeholder="Descripción adicional del trabajo..."></textarea>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('task')">Cancelar</button>
+                    <button type="submit" class="btn btn-success">Guardar Tarea</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast de notificación -->
+    <div id="toast" class="toast">
+        <span id="toastMessage"></span>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
