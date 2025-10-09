@@ -3,133 +3,201 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Cronograma - Desarrolladores</title>
+    <title>Sistema de Gestión - Desarrolladores</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>
+    <!-- Overlay para cerrar sidebar en móvil -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+    
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2>📊 Sistema</h2>
+            <button class="sidebar-close" onclick="toggleSidebar()">✕</button>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="#" class="nav-item active" onclick="showSection('cronograma', event)">
+                <span class="nav-icon">📅</span>
+                <span class="nav-text">Cronograma</span>
+            </a>
+            <a href="#" class="nav-item" onclick="showSection('soporte', event)">
+                <span class="nav-icon">🎫</span>
+                <span class="nav-text">Control Soporte</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <p>v1.0.0</p>
+        </div>
+    </aside>
+
+    <!-- Contenedor principal -->
+    <div class="main-wrapper">
+        <!-- Header -->
+        <header class="main-header">
+            <button class="menu-toggle" onclick="toggleSidebar()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+            <h1 id="pageTitle">
                 <span>📅</span>
                 Sistema de Cronograma - Desarrolladores
             </h1>
-            <div class="header-actions">
-                <button class="btn btn-primary" onclick="openModal('developer')">
-                    <span>➕</span> Agregar Desarrollador
-                </button>
-                <button class="btn btn-success" onclick="openNewAssignmentModal()">
-                    <span>📋</span> Nueva Asignación
-                </button>
-                <button class="btn btn-success" onclick="exportData()">
-                    <span>💾</span> Exportar Datos
-                </button>
-            </div>
-        </div>
+        </header>
 
-        <div class="controls">
-            <div class="filter-group">
-                <label>Filtrar por Proyecto</label>
-                <select id="filterProject" onchange="filterTimeline()">
-                    <option value="">Todos los proyectos</option>
-                    <option value="ONIX">ONIX</option>
-                    <option value="Poliedro">Poliedro</option>
-                    <option value="DIME">DIME</option>
-                    <option value="FACT">FACT</option>
-                    <option value="Banco Agrario">Banco Agrario</option>
-                    <option value="CSI">CSI</option>
-                    <option value="EPM">EPM</option>
-                    <option value="ANDIE">ANDIE</option>
-                </select>
-            </div>
+        <!-- Contenido -->
+        <main class="main-content">
+            
+            <!-- SECCIÓN: CRONOGRAMA -->
+            <section id="section-cronograma" class="content-section active">
+                <div class="container">
+                    <div class="header-actions-container">
+                        <div class="header-actions">
+                            <button class="btn btn-primary" onclick="openModal('developer')">
+                                <span>➕</span> Agregar Desarrollador
+                            </button>
+                            <button class="btn btn-success btn-purple" onclick="openNewAssignmentModal()">
+                                <span>📋</span> Nueva Asignación
+                            </button>
+                            <button class="btn btn-success" onclick="exportData()">
+                                <span>💾</span> Exportar Datos
+                            </button>
+                        </div>
+                    </div>
 
-            <div class="filter-group">
-                <label>Buscar Desarrollador</label>
-                <input type="text" id="searchDev" placeholder="Nombre del desarrollador..." oninput="filterTimeline()">
-            </div>
+                    <div class="controls">
+                        <div class="filter-group">
+                            <label>Filtrar por Proyecto</label>
+                            <select id="filterProject" onchange="filterTimeline()">
+                                <option value="">Todos los proyectos</option>
+                                <option value="ONIX">ONIX</option>
+                                <option value="Poliedro">Poliedro</option>
+                                <option value="DIME">DIME</option>
+                                <option value="FACT">FACT</option>
+                                <option value="Banco Agrario">Banco Agrario</option>
+                                <option value="CSI">CSI</option>
+                                <option value="EPM">EPM</option>
+                                <option value="ANDIE">ANDIE</option>
+                            </select>
+                        </div>
 
-            <div class="filter-group">
-                <label>Mes</label>
-                <div class="month-navigation">
-                    <button class="btn-nav" onclick="previousMonth()" title="Mes anterior">
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                            <path d="M11 2L5 8l6 6V2z"/>
+                        <div class="filter-group">
+                            <label>Buscar Desarrollador</label>
+                            <input type="text" id="searchDev" placeholder="Nombre del desarrollador..." oninput="filterTimeline()">
+                        </div>
+
+                        <div class="filter-group">
+                            <label>Mes</label>
+                            <div class="month-navigation">
+                                <button class="btn-nav" onclick="previousMonth()" title="Mes anterior">
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                        <path d="M11 2L5 8l6 6V2z"/>
+                                    </svg>
+                                </button>
+                                <input type="month" id="filterMonth" onchange="changeMonth()" value="" min="2024-01" max="2026-12">
+                                <button class="btn-nav" onclick="nextMonth()" title="Mes siguiente">
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                        <path d="M5 2v12l6-6-6-6z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stats">
+                        <div class="stat-card">
+                            <h3>Total Desarrolladores</h3>
+                            <p id="statDevs">0</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Proyectos Activos</h3>
+                            <p id="statProjects">0</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>HUTs en Curso</h3>
+                            <p id="statHuts">0</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-container">
+                        <div class="timeline" id="timeline"></div>
+                    </div>
+
+                    <div class="legend">
+                        <h3>Leyenda de Proyectos</h3>
+                        <div class="legend-items">
+                            <div class="legend-item">
+                                <div class="legend-color" style="background: linear-gradient(135deg, #7c3aed 0%, #8b5cf6 100%);"></div>
+                                <span>ONIX</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color" style="background: linear-gradient(135deg, #ea580c 0%, #f97316 100%);"></div>
+                                <span>Poliedro</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color" style="background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);"></div>
+                                <span>DIME</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color" style="background: linear-gradient(135deg, #0891b2 0%, #06b6d4 100%);"></div>
+                                <span>FACT</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color" style="background: linear-gradient(135deg, #059669 0%, #10b981 100%);"></div>
+                                <span>Banco Agrario</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color" style="background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);"></div>
+                                <span>CSI</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color" style="background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);"></div>
+                                <span>EPM</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color" style="background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);"></div>
+                                <span>ANDIE</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color" style="background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);"></div>
+                                <span>Vacaciones</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color" style="background: #fef3c7; border: 2px solid #fde68a;"></div>
+                                <span>Festivos</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECCIÓN: CONTROL SOPORTE (NUEVA) -->
+            <section id="section-soporte" class="content-section">
+                <div class="container">
+                    <div class="empty-state" style="padding: 80px 20px;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 100px; height: 100px; margin-bottom: 20px;">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                            <path d="M2 17l10 5 10-5"></path>
+                            <path d="M2 12l10 5 10-5"></path>
                         </svg>
-                    </button>
-                    <input type="month" id="filterMonth" onchange="changeMonth()" value="" min="2024-01" max="2026-12">
-                    <button class="btn-nav" onclick="nextMonth()" title="Mes siguiente">
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                            <path d="M5 2v12l6-6-6-6z"/>
-                        </svg>
-                    </button>
+                        <h2 style="font-size: 28px; margin-bottom: 12px; color: #1e293b;">Control de Soporte</h2>
+                        <p style="font-size: 16px; color: #64748b; max-width: 500px; margin: 0 auto;">
+                            Esta sección está en construcción. Aquí podrás gestionar los tickets de soporte,
+                            seguimiento de casos y reportes de incidencias.
+                        </p>
+                        
+                        </button>
+                    </div>
                 </div>
-            </div>
-        </div>
+            </section>
 
-        <div class="stats">
-            <div class="stat-card">
-                <h3>Total Desarrolladores</h3>
-                <p id="statDevs">0</p>
-            </div>
-            <div class="stat-card" style="background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);">
-                <h3>Proyectos Activos</h3>
-                <p id="statProjects">0</p>
-            </div>
-            <div class="stat-card" style="background: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%);">
-                <h3>HUTs en Curso</h3>
-                <p id="statHuts">0</p>
-            </div>
-        </div>
-
-        <div class="timeline-container">
-            <div class="timeline" id="timeline"></div>
-        </div>
-
-        <div class="legend">
-            <h3>Leyenda de Proyectos</h3>
-            <div class="legend-items">
-                <div class="legend-item">
-                    <div class="legend-color" style="background: #9f7aea;"></div>
-                    <span>ONIX</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background: #f6ad55;"></div>
-                    <span>Poliedro</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background: #fc8181;"></div>
-                    <span>DIME</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background: #4fd1c5;"></div>
-                    <span>FACT</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background: #48bb78;"></div>
-                    <span>Banco Agrario</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background: #38b2ac;"></div>
-                    <span>CSI</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background: #ed8936;"></div>
-                    <span>EPM</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background: #4299e1;"></div>
-                    <span>ANDIE</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background: #fbd38d;"></div>
-                    <span>Vacaciones</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background: #fbd38d; border: 2px solid #f6ad55;"></div>
-                    <span>Festivos</span>
-                </div>
-            </div>
-        </div>
+        </main>
     </div>
+
+    <!-- MODALES -->
 
     <!-- Modal para agregar desarrollador -->
     <div id="modalDeveloper" class="modal">

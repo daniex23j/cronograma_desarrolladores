@@ -682,6 +682,71 @@ window.onclick = function(e) {
         }
     }
 }
+// ========== CONTROL DE SIDEBAR Y NAVEGACIÓN ==========
 
+// Toggle sidebar
+function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    const mainWrapper = document.querySelector('.main-wrapper');
+    
+    // En desktop: solo cerrar/abrir con margen
+    if (window.innerWidth > 1024) {
+        sidebar.classList.toggle('closed');
+        mainWrapper.classList.toggle('sidebar-closed');
+    } else {
+        // En móvil: overlay y transformación
+        sidebar.classList.toggle('open');
+        overlay.classList.toggle('active');
+    }
+}
+
+// Cambiar entre secciones
+function showSection(sectionName, event) {
+    if (event) {
+        event.preventDefault();
+    }
+    
+    // Ocultar todas las secciones
+    const sections = document.querySelectorAll('.content-section');
+    sections.forEach(section => section.classList.remove('active'));
+    
+    // Mostrar sección seleccionada
+    const targetSection = document.getElementById(`section-${sectionName}`);
+    if (targetSection) {
+        targetSection.classList.add('active');
+    }
+    
+    // Actualizar navegación activa
+    const navItems = document.querySelectorAll('.nav-item');
+    navItems.forEach(item => item.classList.remove('active'));
+    if (event) {
+        event.target.closest('.nav-item').classList.add('active');
+    }
+    
+    // Actualizar título del header
+    const pageTitle = document.getElementById('pageTitle');
+    if (sectionName === 'cronograma') {
+        pageTitle.innerHTML = '<span>📅</span> Sistema de Cronograma - Desarrolladores';
+    } else if (sectionName === 'soporte') {
+        pageTitle.innerHTML = '<span>🎫</span> Control de Soporte';
+    }
+    
+    // Cerrar sidebar en móvil al cambiar de sección
+    if (window.innerWidth <= 1024) {
+        toggleSidebar();
+    }
+}
+
+// Cerrar sidebar al hacer clic fuera en móvil
+window.addEventListener('resize', () => {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    
+    if (window.innerWidth > 1024) {
+        sidebar.classList.remove('open');
+        overlay.classList.remove('active');
+    }
+});
 // Inicializar aplicación cuando se carga la página
 document.addEventListener('DOMContentLoaded', init);
