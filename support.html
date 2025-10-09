@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestión - Desarrolladores</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Overlay para cerrar sidebar en móvil -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+    
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2>📊 Sistema</h2>
+            <button class="sidebar-close" onclick="toggleSidebar()">✕</button>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="index.html" class="nav-item" >
+                <span class="nav-icon">📅</span>
+                <span class="nav-text">Cronograma</span>
+            </a>
+            <a href="support.html" class="nav-item">
+                <span class="nav-icon">🎫</span>
+                <span class="nav-text">Control Soporte</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <p>v1.0.0</p>
+        </div>
+    </aside>
+
+    <!-- Contenedor principal -->
+    <div class="main-wrapper">
+        <!-- Header -->
+        <header class="main-header">
+            <button class="menu-toggle" onclick="toggleSidebar()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+            <h1 id="pageTitle">
+                <span>📅</span>
+                Sistema de Cronograma - Desarrolladores
+            </h1>
+        </header>
+
+            <!-- SECCIÓN: CONTROL SOPORTE (NUEVA) -->
+            <section id="section-soporte" class="content-section">
+                <div class="container">
+                    <div class="empty-state" style="padding: 80px 20px;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 100px; height: 100px; margin-bottom: 20px;">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                            <path d="M2 17l10 5 10-5"></path>
+                            <path d="M2 12l10 5 10-5"></path>
+                        </svg>
+                        <h2 style="font-size: 28px; margin-bottom: 12px; color: #1e293b;">Control de Soporte</h2>
+                        <p style="font-size: 16px; color: #64748b; max-width: 500px; margin: 0 auto;">
+                            Esta sección está en construcción. Aquí podrás gestionar los tickets de soporte,
+                            seguimiento de casos y reportes de incidencias.
+                        </p>
+                        
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
