@@ -75,22 +75,22 @@
 
                         <div class="form-group">
                             <label>Fecha PAP *</label>
-                            <input type="date" id="taskHut" min="2024-01-01" max="2026-12-31">
+                            <input type="date" id="taskHut" min="2024-01-01" max="2026-12-31" required>
                         </div>
 
                         <div class="form-group">
                             <label>Número de cambio *</label>
-                            <input type="text" id="taskHut" required placeholder="Ingresa el número de cambio del Excel Indicadores">
+                            <input type="text" id="taskHut" placeholder="Ingresa el número de cambio del Excel Indicadores">
                         </div>
 
                         <div class="form-group">
                             <label>Solicitud de Q *</label>
-                            <input type="text" id="taskHut" required placeholder="Ingresa el número después de generar el acta">
+                            <input type="text" id="taskHut" placeholder="Ingresa el número después de generar el acta">
                         </div>
 
                         <div class="form-group">
                             <label>Acercamiento *</label>
-                            <select id="taskProject" required>
+                            <select id="taskProject" >
                                 <option value=""></option>
                                 <option value="Pendiente">Pendiente</option>
                                 <option value="OK">OK</option>
@@ -111,7 +111,7 @@
                             </select>
                         </div>
 
-                        <div class="form-group" id="devSelectGroup">
+                        <div class="form-group">
                             <label>Desarrollador *</label>
                             <select id="taskDevId" required>
                                 <option value="">Seleccione un desarrollador</option>
@@ -119,8 +119,70 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Descripción</label>
-                            <textarea id="taskDescription" placeholder="Descripción adicional del trabajo..."></textarea>
+                            <label>Lider técnico *</label>
+                            <select id="taskProject" required>
+                                <option value=""></option>
+                                <option value="Diana Melo">Diana Melo</option>
+                                <option value="Jeison Prieto">Jeison Prieto</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Fecha estimada entrega documentación *</label>
+                            <input type="date" id="taskHut" min="2024-01-01" max="2026-12-31">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Estado de HUT *</label>
+                            <select id="taskProject" required>
+                                <option value=""></option>
+                                <option value="espera_docs">1. En espera de documentación</option>
+                                <option value="espera_entrega">2. En espera de entrega a soporte</option>
+                                <option value="espera_ok">3. En espera de OK de soporte</option>
+                                <option value="espera_acta">4. En espera de generación de acta</option>
+                                <option value="espera_firma">5. Acta en espera de firmas</option>
+                                <option value="acta_finalizada">6. Acta finalizada</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Soporte *</label>
+                            <select id="taskProject" required>
+                                <option value=""></option>
+                                <option value="Pendiente">Pendiente</option>
+                                <option value="Completada">Completada</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Fecha ok de soporte *</label>
+                            <input type="date" id="taskHut" min="2024-01-01" max="2026-12-31">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Acta Claro *</label>
+                            <select id="taskProject" required>
+                                <option value=""></option>
+                                <option value="pendiente">Pendiente</option>
+                                <option value="finalizada">Finalizada</option>
+                                <option value="no_aplica">No aplica</option>
+                                <option value="ok">OK</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Fecha final de aprobación *</label>
+                            <input type="date" id="taskHut" min="2024-01-01" max="2026-12-31">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Mes *</label>
+                            <input type="text" id="taskHut" placeholder="Ingresa el mes que se acepta">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Comentarios</label>
+                            <textarea id="taskDescription" placeholder="Descripción adicional de la HUT"></textarea>
                         </div>
 
                         <div class="modal-actions">
