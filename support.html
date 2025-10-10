@@ -44,26 +44,92 @@
             </button>
             <h1 id="pageTitle">
                 <span>📅</span>
-                Sistema de Cronograma - Desarrolladores
+                Control soporte
             </h1>
         </header>
-            <div class="container">
-                    <div class="empty-state" style="padding: 80px 20px;">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 100px; height: 100px; margin-bottom: 20px;">
-                            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
-                            <path d="M2 17l10 5 10-5"></path>
-                            <path d="M2 12l10 5 10-5"></path>
-                        </svg>
-                        <h2 style="font-size: 28px; margin-bottom: 12px; color: #1e293b;">Control de Soporte</h2>
-                        <p style="font-size: 16px; color: #64748b; max-width: 500px; margin: 0 auto;">
-                            Esta sección está en construcción. Aquí podrás gestionar los tickets de soporte,
-                            seguimiento de casos y reportes de incidencias.
-                        </p>
-                        
-                        </button>
-                    </div>
-                </div>
+        <div class="container">
+            <div class="empty-state" style="padding: 30px 20px;">
+                <h2 style="font-size: 28px; margin-bottom: 15px; color: #1e293b;">Búsqueda e ingreso de proyectos</h2>
+                <form onsubmit="saveTask(event)">
+                    <input type="hidden" id="taskId">
 
+                        <div class="form-group">
+                            <label>Número HUT *</label>
+                            <input type="text" id="taskHut" required placeholder="Ej: HUT 649547">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Número Feature *</label>
+                            <input type="text" id="taskHut" required placeholder="Ej: Feature 649547">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Titulo proyecto *</label>
+                            <input type="text" id="taskHut" required placeholder="Ingresa el titulo del proyecto">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Linea de producto *</label>
+                            <input type="text" id="taskHut" required placeholder="Ej: POLIEDRO OTROS">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Fecha PAP *</label>
+                            <input type="date" id="taskHut" min="2024-01-01" max="2026-12-31">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Número de cambio *</label>
+                            <input type="text" id="taskHut" required placeholder="Ingresa el número de cambio del Excel Indicadores">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Solicitud de Q *</label>
+                            <input type="text" id="taskHut" required placeholder="Ingresa el número después de generar el acta">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Acercamiento *</label>
+                            <select id="taskProject" required>
+                                <option value=""></option>
+                                <option value="Pendiente">Pendiente</option>
+                                <option value="OK">OK</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Fecha Acercamiento *</label>
+                            <input type="date" id="taskHut" min="2024-01-01" max="2026-12-31">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Documentación *</label>
+                            <select id="taskProject" required>
+                                <option value=""></option>
+                                <option value="Pendiente">Pendiente</option>
+                                <option value="OK">OK</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group" id="devSelectGroup">
+                            <label>Desarrollador *</label>
+                            <select id="taskDevId" required>
+                                <option value="">Seleccione un desarrollador</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Descripción</label>
+                            <textarea id="taskDescription" placeholder="Descripción adicional del trabajo..."></textarea>
+                        </div>
+
+                        <div class="modal-actions">
+                            <button type="button" class="btn btn-secondary" onclick="closeModal('task')">Cancelar</button>
+                            <button type="submit" class="btn btn-success">Guardar Tarea</button>
+                        </div>
+                </form>
+            </div>
+        </div>
         </main>
     </div>
 
