@@ -530,7 +530,7 @@ function renderTimeline() {
         // Si no hay tareas, mostrar una fila vacía
         const numRows = taskRows.length > 0 ? taskRows.length : 1;
         
-        // Renderizar filas
+    
         for (let rowIndex = 0; rowIndex < numRows; rowIndex++) {
             const row = taskRows[rowIndex] || [];
             html += '<div class="timeline-row">';
