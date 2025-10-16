@@ -656,7 +656,7 @@ function showToast(message) {
 
 // Exportar datos
 function exportData() {
-    const data = {
+     const data = {
         developers: developers,
         tasks: tasks,
         exportDate: new Date().toISOString()
